@@ -29,4 +29,9 @@ public class CalculatorTest {
         assertEquals(3, calculator.add("1,2"));
         assertEquals(8, calculator.add("3,5"));
     }
+
+    @Test
+    public void testAdd_multipleNumbers_returnsTheirSum() {
+        assertEquals(15, calculator.add("1,2,3,4,5"));
+    }
 }
