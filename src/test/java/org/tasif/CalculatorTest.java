@@ -39,4 +39,9 @@ public class CalculatorTest {
     public void testAdd_withNewLineDelimiter_returnsSum() {
         assertEquals(6, calculator.add("1\n2,3"));
     }
+
+    @Test
+    public void testAdd_withCustomDelimiter_returnsSum() {
+        assertEquals(3, calculator.add("//;\n1;2"));
+    }
 }
