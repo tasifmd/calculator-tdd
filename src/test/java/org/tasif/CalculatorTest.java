@@ -70,4 +70,19 @@ public class CalculatorTest {
         assertEquals(2, calculator.add("2,1001"));
         assertEquals(1002, calculator.add("1000,2"));
     }
+
+    @Test
+    public void testAdd_withCustomDelimiterOfAnyLength_returnsSum() {
+        assertEquals(6, calculator.add("//[***]\n1***2***3"));
+    }
+
+    @Test
+    public void testAdd_withMultipleCustomDelimiters_returnsSum() {
+        assertEquals(6, calculator.add("//[*][%]\n1*2%3"));
+    }
+
+    @Test
+    public void testAdd_withMultipleCustomDelimitersOfLongerLength_returnsSum() {
+        assertEquals(6, calculator.add("//[**][%%]\n1**2%%3"));
+    }
 }

@@ -2,8 +2,11 @@ package org.tasif;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 
 public class Calculator {
@@ -27,14 +30,24 @@ public class Calculator {
     private Stream<String> getNumbersStream(String numbers) {
         if (numbers.startsWith("//")) {
             String[] parts = numbers.split("\n", 2);
-            String header = parts[0];
+            String header = parts[0].substring(2);
             String numbersPart = parts[1];
-            String delimiter = header.substring(2);
-            return Arrays.stream(numbersPart.split(delimiter));
+
+            List<String> delimiters = new ArrayList<>();
+            Matcher matcher = Pattern.compile("\\[(.*?)\\]").matcher(header);
+            while (matcher.find()) {
+                delimiters.add(matcher.group(1));
+            }
+
+            if (delimiters.isEmpty()) {
+                delimiters.add(header);
+            }
+
+            String delimiterRegex = delimiters.stream().map(Pattern::quote).collect(Collectors.joining("|"));
+            return Arrays.stream(numbersPart.split(delimiterRegex));
         }
 
-        String[] nums = numbers.split(",|\n");
-        return Arrays.stream(nums);
+        return Arrays.stream(numbers.split(",|\n"));
     }
 
 }
