@@ -1,7 +1,10 @@
 package org.tasif;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
 
 public class Calculator {
 
@@ -10,7 +13,15 @@ public class Calculator {
             return 0;
         }
 
-        return getNumbersStream(numbers).mapToInt(Integer::parseInt).sum();
+        int[] parsedNumbers = getNumbersStream(numbers).mapToInt(Integer::parseInt).toArray();
+
+        List<Integer> negatives = Arrays.stream(parsedNumbers).filter(n -> n < 0).boxed().collect(Collectors.toList());
+
+        if (!negatives.isEmpty()) {
+            throw new IllegalArgumentException("negatives not allowed: " + negatives.stream().map(String::valueOf).collect(Collectors.joining(", ")));
+        }
+
+        return Arrays.stream(parsedNumbers).sum();
     }
 
     private Stream<String> getNumbersStream(String numbers) {

@@ -44,4 +44,24 @@ public class CalculatorTest {
     public void testAdd_withCustomDelimiter_returnsSum() {
         assertEquals(3, calculator.add("//;\n1;2"));
     }
+
+    @Test
+    public void testAdd_withNegativeNumber_throwsException() {
+        try {
+            calculator.add("1,-2,3");
+            fail("Exception expected.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negatives not allowed: -2", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAdd_withMultipleNegativeNumbers_throwsException() {
+        try {
+            calculator.add("1,-2,-4,5");
+            fail("Exception expected.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negatives not allowed: -2, -4", e.getMessage());
+        }
+    }
 }
