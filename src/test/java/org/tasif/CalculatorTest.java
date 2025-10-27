@@ -64,4 +64,10 @@ public class CalculatorTest {
             assertEquals("negatives not allowed: -2, -4", e.getMessage());
         }
     }
+
+    @Test
+    public void testAdd_withNumbersBiggerThan1000_areIgnored() {
+        assertEquals(2, calculator.add("2,1001"));
+        assertEquals(1002, calculator.add("1000,2"));
+    }
 }

@@ -21,7 +21,7 @@ public class Calculator {
             throw new IllegalArgumentException("negatives not allowed: " + negatives.stream().map(String::valueOf).collect(Collectors.joining(", ")));
         }
 
-        return Arrays.stream(parsedNumbers).sum();
+        return Arrays.stream(parsedNumbers).filter(n -> n <= 1000).sum();
     }
 
     private Stream<String> getNumbersStream(String numbers) {
